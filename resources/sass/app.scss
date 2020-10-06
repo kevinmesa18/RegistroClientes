@@ -1,1 +1,46 @@
-//
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+
+body{
+    width: 100vw;
+    height: 100vh;
+    background: rgb(86, 86, 86);
+    background: radial-gradient(circle, rgb(118, 118, 118) 32%, rgb(43, 43, 43) 100%);
+}
+
+.contenedor{
+    width:90px;
+    height:240px;
+    position:absolute;
+    right:0px;
+    bottom:0px;
+}
+.botonF1{
+    width:50px;
+    height:50px;
+    border-radius:100%;
+    right:0;
+    bottom:0;
+    position:absolute;
+    margin-right:16px;
+    margin-bottom:16px;
+    border:none;
+    outline:none;
+    color:#FFF;
+    font-size:30px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    transition:.3s;
+}
+.spanbtn1{
+    transition:.5s;
+}
+.botonF1:hover span{
+    transform:rotate(360deg);
+}
