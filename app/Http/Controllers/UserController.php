@@ -61,7 +61,7 @@ class UserController extends Controller
                 'password' => Hash::make($request['password']),
             ]);
             DB::commit();
-            //Mail::to($user->email)->send(new UserMail($user, $request->password));
+            Mail::to($user->email)->send(new UserMail($user, $request->password));
             return redirect("/users")->with('status', 'Se creo el usuario correctamente');
         } catch (\Exception $e) {
             DB::rollBack();
