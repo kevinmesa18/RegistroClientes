@@ -6,7 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
-    public function City() {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'city_id',
+    ];
+
+    public function city() {
         return $this->belongsTo(City::class);
     }
 }

@@ -5,17 +5,17 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-            <div class="card-header bg-info">Editar usuario</div>
+                <div class="card-header bg-info">{{ __('Creación de cliente') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="/users/update/{{$user->id}}">
+                    <form method="POST" action="{{ route('clients/save') }}">
                         @csrf
 
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $user->name }}" placeholder="Nombre" required autocomplete="name" autofocus>
+                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Nombre" required autocomplete="name" autofocus>
                             @error('name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -25,10 +25,15 @@
 
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-at"></i></span>
+                                <span class="input-group-text"><i class="fas fa-city"></i></span>
                             </div>
-                            <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $user->email }}" placeholder="Email" required autocomplete="email">
-                            @error('email')
+                            <select id="city_id" class="form-control @error('city_id') is-invalid @enderror" name="city_id" value="{{ old('name') }}" required>
+                                <option value="">Seleccione una ciudad</option>
+                                @foreach($cities as $value)
+                                    <option value="{{$value->id}}">{{$value->name}}</option>
+                                @endforeach
+                            </select>
+                            @error('city_id')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -36,9 +41,9 @@
                         </div>
 
                         <div class="form-group mb-0 text-right">
-                            <a class="btn btn-secondary" href="{{ url('/users') }}">Cancelar</a>
+                            <a class="btn btn-secondary" href="{{ url('/clients') }}">Cancelar</a>
                             <button type="submit" class="btn btn-primary">
-                                {{ __('Editar usuario') }}
+                                {{ __('Crear cliente') }}
                             </button>
                         </div>
 

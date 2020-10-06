@@ -9,11 +9,22 @@
 
                     <div class="card-body">
                         @if (session('status'))
-                            <div class="alert alert-success" role="alert">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 {{ session('status') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
                         @endif
-                        <table class="table table-sm table-hover table-striped text-center table-bordered">
+                        @if (session('errors'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                {{ session('errors') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
+                        <table id="example" class="table table-sm table-hover table-striped text-center table-bordered">
                             <thead class="bg-info">
                                 <tr>
                                     <th scope="col">Nombre</th>
@@ -29,8 +40,8 @@
                                         <td>{{$client->city->name}}</td>
                                         <td>{{$client->created_at}}</td>
                                         <td>
-                                            <a class="btn btn-sm btn-warning" href="/user/edit?id={{$client->id}}"><i class="fas fa-pencil-alt"></i></a>
-                                            <a class="btn btn-sm btn-danger" href="/user/delete?id={{$client->id}}"><i class="fas fa-window-close"></i></a>
+                                            <a class="btn btn-sm btn-warning" href="/clients/edit/{{$client->id}}"><i class="fas fa-pencil-alt"></i></a>
+                                            <a class="btn btn-sm btn-danger" href="/clients/delete/{{$client->id}}"><i class="fas fa-window-close"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -42,8 +53,8 @@
         </div>
     </div>
     <div class="contenedor">
-        <button class="bg-success botonF1">
-            <i class="fas fa-plus"></i>
-        </button>
+        <a class="botonF1 btn-success" href="{{ route('clients/create') }}">
+            <i class=" fas fa-plus"></i>
+        </a>
     </div>
 @endsection

@@ -13,7 +13,7 @@ class CityRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,13 @@ class CityRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string',
+        ];
+    }
+
+    public function messages(){
+        return [
+            'name.required' => 'El nombre es requerido.',
         ];
     }
 }

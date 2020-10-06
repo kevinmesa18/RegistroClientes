@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -39,7 +40,7 @@ class UserController extends Controller
      */
     public function create(Request $request)
     {
-        //
+        return view('Users.Create');
     }
 
     /**
@@ -48,9 +49,22 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $user = User::create([
+                'name' => $request['name'],
+                'email' => $request['email'],
+                'password' => Hash::make($request['password']),
+            ]);
+            DB::commit();
+            return redirect("/users")->with('status', 'Se creo el usuario correctamente');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect("/users")->with('errors', $e->getMessage());
+        }
+
     }
 
     /**
@@ -72,7 +86,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         return view('Users.Edit', compact('user'));
     }
 
@@ -85,7 +99,18 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return $request;
+        try {
+            DB::beginTransaction();
+            $user = User::findOrFail($id);
+            $user->email = $request['email'];
+            $user->name = $request['name'];
+            $user->save();
+            DB::commit();
+            return redirect("/users")->with('status', 'Se edito el usuario correctamente');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect("/users")->with('errors', $e->getMessage());
+        }
     }
 
     /**
@@ -96,15 +121,20 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id);
-        try {
-            DB::beginTransaction();
-            $user->delete();
-            DB::commit();
-            return redirect("/users")->with('status', 'Se elimino el usuario correctamente');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return redirect("/users")->with('errors', $e->getMessage());
+        $user = User::findOrFail($id);
+        $userAuth = Auth::user();
+        if ($userAuth->id == $user->id) {
+            return redirect("/users")->with('errors', 'No puedes eliminar tu usuario');
+        } else {
+            try {
+                DB::beginTransaction();
+                $user->delete();
+                DB::commit();
+                return redirect("/users")->with('status', 'Se elimino el usuario correctamente');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return redirect("/users")->with('errors', $e->getMessage());
+            }
         }
     }
 }

@@ -16,9 +16,9 @@
                                 </button>
                             </div>
                         @endif
-                        @if ($errors->any())
+                        @if (session('errors'))
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                Hay errores revisa el modal
+                                {{ session('errors') }}
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -40,8 +40,8 @@
                                         <td>{{$user->email}}</td>
                                         <td>{{$user->created_at}}</td>
                                         <td>
-                                            <a class="btn btn-sm btn-warning" href="/user/edit/{{$user->id}}"><i class="fas fa-pencil-alt"></i></a>
-                                            <a class="btn btn-sm btn-danger" href="/user/delete/{{$user->id}}"><i class="fas fa-window-close"></i></a>
+                                            <a class="btn btn-sm btn-warning" href="/users/edit/{{$user->id}}"><i class="fas fa-pencil-alt"></i></a>
+                                            <a class="btn btn-sm btn-danger" href="/users/delete/{{$user->id}}"><i class="fas fa-window-close"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -53,7 +53,7 @@
         </div>
     </div>
     <div class="contenedor">
-        <a class="botonF1 btn-success" href="{{ route('register') }}">
+        <a class="botonF1 btn-success" href="{{ route('users/create') }}">
             <i class=" fas fa-plus"></i>
         </a>
     </div>

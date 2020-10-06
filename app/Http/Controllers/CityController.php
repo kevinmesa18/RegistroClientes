@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\City;
+use App\Http\Requests\CityRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CityController extends Controller
 {
@@ -25,7 +27,7 @@ class CityController extends Controller
      */
     public function index()
     {
-        $cities = City::all();
+        $cities = City::withCount('clients')->get();
         return view('Cities.View', compact('cities'));
     }
 
@@ -36,7 +38,7 @@ class CityController extends Controller
      */
     public function create()
     {
-        //
+        return view('Cities.Create');
     }
 
     /**
@@ -45,9 +47,19 @@ class CityController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CityRequest $request)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $city = City::create([
+                'name' => $request['name']
+            ]);
+            DB::commit();
+            return redirect("/cities")->with('status', 'Se creo la ciudad correctamente');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect("/cities")->with('errors', $e->getMessage());
+        }
     }
 
     /**
@@ -69,7 +81,8 @@ class CityController extends Controller
      */
     public function edit($id)
     {
-        //
+        $city = City::find($id);
+        return view('Cities.Edit', compact('city'));
     }
 
     /**
@@ -81,7 +94,17 @@ class CityController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $city = City::findOrFail($id);
+            $city->name = $request['name'];
+            $city->save();
+            DB::commit();
+            return redirect("/cities")->with('status', 'Se edito la ciudad correctamente');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect("/cities")->with('errors', $e->getMessage());
+        }
     }
 
     /**
@@ -92,6 +115,15 @@ class CityController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $city = City::findOrFail($id);
+            $city->delete();
+            DB::commit();
+            return redirect("/cities")->with('status', 'Se elimino la ciudad correctamente');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect("/cities")->with('errors', $e->getMessage());
+        }
     }
 }
