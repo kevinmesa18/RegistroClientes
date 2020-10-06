@@ -49747,7 +49747,13 @@ $('#myModal').on('shown.bs.modal', function () {
   $('#myInput').trigger('focus');
 });
 $(document).ready(function () {
-  $('#example').DataTable();
+  $('#cities').DataTable();
+});
+$(document).ready(function () {
+  $('#clients').DataTable();
+});
+$(document).ready(function () {
+  $('#users').DataTable();
 });
 
 /***/ }),

@@ -28,7 +28,7 @@ class CityController extends Controller
     public function index()
     {
         $cities = City::withCount('clients')->get();
-        return view('Cities.View', compact('cities'));
+        return view('cities.view', compact('cities'));
     }
 
     /**
@@ -38,7 +38,7 @@ class CityController extends Controller
      */
     public function create()
     {
-        return view('Cities.Create');
+        return view('cities.create');
     }
 
     /**
@@ -82,7 +82,7 @@ class CityController extends Controller
     public function edit($id)
     {
         $city = City::find($id);
-        return view('Cities.Edit', compact('city'));
+        return view('cities.edit', compact('city'));
     }
 
     /**

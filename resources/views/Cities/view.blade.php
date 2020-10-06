@@ -5,7 +5,18 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header bg-info">Ciudades</div>
+                    <div class="card-header bg-info">
+                        <div class="row">
+                            <div class="col-11">
+                                <h5>Ciudades</h5>
+                            </div>
+                            <div class="col-1">
+                                <a class="text-right" href="{{ route('cities/create') }}">
+                                    <i class="fas fa-plus-circle fa-2x" style="color: rgb(25, 60, 25)"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="card-body">
                         @if (session('status'))
@@ -53,10 +64,5 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="contenedor">
-        <a class="botonF1 btn-success" href="{{ route('cities/create') }}">
-            <i class=" fas fa-plus"></i>
-        </a>
     </div>
 @endsection

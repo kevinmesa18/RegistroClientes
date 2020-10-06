@@ -29,7 +29,7 @@ class ClientController extends Controller
     public function index()
     {
         $clients = Client::with('city')->get();
-        return view('Clients.View', compact('clients'));
+        return view('clients.view', compact('clients'));
     }
 
     /**
@@ -40,7 +40,7 @@ class ClientController extends Controller
     public function create()
     {
         $cities = City::all();
-        return view('Clients.Create', compact('cities'));
+        return view('clients.create', compact('cities'));
     }
 
     /**
@@ -86,7 +86,7 @@ class ClientController extends Controller
     {
         $cities = City::all();
         $client = Client::find($id);
-        return view('Clients.Edit', compact('cities', 'client'));
+        return view('clients.edit', compact('cities', 'client'));
     }
 
     /**
