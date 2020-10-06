@@ -2,7 +2,11 @@
 
 namespace App\Observers;
 
+use App\Mail\UserMail;
 use App\User;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class UserObserver
 {
@@ -14,7 +18,13 @@ class UserObserver
      */
     public function created(User $user)
     {
-        //
+        try {
+            $password = Crypt::decrypt($user->password);
+            $user->mail;
+            Mail::to($user->email)->send(new UserMail($user, $password));
+        } catch (\Throwable $th) {
+            Log::error('Test observer: '.$th->getMessage());
+        }
     }
 
     /**
