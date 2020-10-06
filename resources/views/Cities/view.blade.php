@@ -24,7 +24,7 @@
                                 </button>
                             </div>
                         @endif
-                        <table class="table table-sm table-hover table-striped text-center table-bordered">
+                        <table id="cities" class="table table-sm table-hover table-striped text-center table-bordered">
                             <thead class="bg-info">
                                 <tr>
                                     <th scope="col">Id</th>
