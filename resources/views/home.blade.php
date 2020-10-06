@@ -14,7 +14,7 @@
                             </div>
                         @endif
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-sm-12 col-md-4">
                                 <div class="card">
                                     <div class="card-header bg-info">Ciudades</div>
                                     <div class="card-body">
@@ -22,7 +22,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-sm-12 col-md-4">
                                 <div class="card">
                                     <div class="card-header bg-info">Clientes</div>
                                     <div class="card-body">
@@ -30,7 +30,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-sm-12 col-md-4">
                                 <div class="card">
                                     <div class="card-header bg-info">Usuarios</div>
                                     <div class="card-body">

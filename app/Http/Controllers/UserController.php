@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
@@ -38,19 +39,7 @@ class UserController extends Controller
      */
     public function create(Request $request)
     {
-        try {
-            DB::beginTransaction();
-            $user = User::create([
-                'name' => $request['name'],
-                'email' => $request['email'],
-                'password' => Hash::make($request['password']),
-            ]);
-            DB::commit();
-            return redirect("/users")->with('status', 'Se creo el usuario correctamente');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return redirect("/users")->with('status', $e->getMessage());
-        }
+        //
     }
 
     /**
@@ -83,7 +72,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        return view('Users.Edit', compact('user'));
     }
 
     /**
@@ -95,7 +85,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return $request;
     }
 
     /**
@@ -106,6 +96,15 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        try {
+            DB::beginTransaction();
+            $user->delete();
+            DB::commit();
+            return redirect("/users")->with('status', 'Se elimino el usuario correctamente');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect("/users")->with('errors', $e->getMessage());
+        }
     }
 }

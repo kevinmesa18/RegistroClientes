@@ -21,4 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/cities', 'CityController@index')->name('cities');
 Route::get('/clients', 'ClientController@index')->name('clients');
 Route::get('/users', 'UserController@index')->name('users');
-Route::post('/user/create', 'UserController@create')->name('user/create');
+
+Route::get('/user/edit/{id}', 'UserController@edit')->name('users/edit');
+Route::get('/user/delete/{id}', 'UserController@destroy')->name('users/delete');
+Route::post('/user/update/', 'UserController@update')->name('user/update');
